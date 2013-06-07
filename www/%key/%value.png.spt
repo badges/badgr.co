@@ -21,8 +21,8 @@ bg_image = numpy.dot( numpy.ones((h,w,3), dtype='uint8')
                      )
 image = Image.fromarray(bg_image)
 
-draw = ImageDraw.Draw(image)
-draw.text((6, 0), "build | passing", fill='rgb(0, 0, 0)', font=FONT)
+text = "%s %s" % (path['key'], path['value'])
+ImageDraw.Draw(image).text((6, 0), text, fill='rgb(0, 0, 0)', font=FONT)
 
 output = StringIO()
 image.save(output, 'PNG')
