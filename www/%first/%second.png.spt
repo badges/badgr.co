@@ -6,7 +6,8 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 font_filepath = os.path.join(website.project_root, 'OpenSans-Regular.ttf')
-font = ImageFont.truetype(font_filepath, size=10)
+font_size = 10
+font = ImageFont.truetype(font_filepath, size=font_size)
 
 [---]
 
@@ -23,7 +24,7 @@ second = path['second']
 w1 = 6 + font.getsize(first)[0] + 4
 w2 = 4 + font.getsize(second)[0] + 6
 w = w1 + w2
-h = 4 + 10 + 4
+h = 4 + font_size + 4
 
 
 # Draw image.
