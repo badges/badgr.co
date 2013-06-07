@@ -3,6 +3,8 @@ from cStringIO import StringIO
 from urllib import quote, urlopen
 
 from aspen import json
+from badgr import services
+from badgr.colors import DARK_GREY, LIGHT_GREY
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -10,63 +12,6 @@ from PIL import ImageFont
 font_filepath = os.path.join(website.project_root, 'OpenSans-Regular.ttf')
 font_size = 10
 font = ImageFont.truetype(font_filepath, size=font_size)
-
-DARK_GREY = (74,74,74)
-LIGHT_GREY = (135,135,135)
-
-RED = (179,0,0)
-GREEN = (147,188,59)
-YELLOW = (177,175,0)
-
-
-# Make one service just for kicks.
-# ================================
-
-services = {}
-
-class Generic(object):
-
-    def __init__(self, first, second, bg):
-        self.first = first
-        self.second = second
-        self.bg = bg
-
-
-class TravisCI(object):
-
-    def __init__(self, first, second, bg):
-        self.first = "build"
-
-        url = 'https://api.travis-ci.org/repos?slug=%s' % quote(second)
-        fp = urlopen(url)
-        repos = json.loads(fp.read())
-        if repos:
-            status = repos[0].get('last_build_status', 'n/a')
-        else:
-            status = 'n/a'
-
-        self.second = { 0: 'passing'
-                      , 1: 'failing'
-                      , None: 'pending'
-                      , 'n/a': 'n/a'
-                       }.get(status, 'n/a')
-
-        self.bg = { 'failing': RED
-                  , 'passing': GREEN
-                  , 'pending': YELLOW
-                   }.get(self.second, LIGHT_GREY)
-
-
-class Gittip(object):
-
-    def __init__(self, first, second, bg):
-        self.first = "Gittip"
-        self.second = second
-        self.bg = (42, 143, 121)  # Gittip green
-
-
-services['travis-ci'] = TravisCI
-services['gittip'] = Gittip
 
 
 [---]
@@ -77,7 +22,7 @@ services['gittip'] = Gittip
 
 first = path['first'].lower()
 bg = qs.get('bg', LIGHT_GREY)
-ServiceClass = services.get(first, Generic)
+ServiceClass = services.get(first)
 badge = ServiceClass(first, path['second'], bg)
 
 
