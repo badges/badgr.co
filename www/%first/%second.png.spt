@@ -35,15 +35,15 @@ image = Image.new('RGBA', (w,h), bg_color)
 draw = ImageDraw.Draw(image)
 
 #draw.text((6, .1), first, fill=(0,0,0,76), font=font)
-draw.text((6, 0), first, fill='white', font=font)
-draw.text((6, 0), first, fill='white', font=font)
+draw.text((6, 1), first, fill='white', font=font)
+draw.text((6, 1), first, fill='white', font=font)
 
 bg = qs.get('bg', 'rgb(135,135,135)')
 draw.rectangle((w1+1, 0, w, h), fill=bg)
 
 #draw.text((w1 + 4, .1), second, fill=(0,0,0,76), font=font)
-draw.text((w1 + 5, 0), second, fill='white', font=font)
-draw.text((w1 + 5, 0), second, fill='white', font=font)
+draw.text((w1 + 5, 1), second, fill='white', font=font)
+draw.text((w1 + 5, 1), second, fill='white', font=font)
 
 output = StringIO()
 image.save(output, 'PNG')
