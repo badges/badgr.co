@@ -1,0 +1,31 @@
+import os
+from cStringIO import StringIO
+
+import numpy
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+
+FONT = ImageFont.truetype( os.path.join(website.project_root, 'OpenSans.ttf')
+                         , 10
+                          )
+
+[---]
+
+h,w = 24, 100
+bg_color = (224, 224, 224)
+
+# Thanks to http://stackoverflow.com/a/8111503/253309.
+bg_image = numpy.dot( numpy.ones((h,w,3), dtype='uint8')
+                    , numpy.diag(numpy.asarray((bg_color), dtype='uint8'))
+                     )
+image = Image.fromarray(bg_image)
+
+draw = ImageDraw.Draw(image)
+draw.text((6, 0), "build | passing", fill='rgb(0, 0, 0)', font=FONT)
+
+output = StringIO()
+image.save(output, 'PNG')
+
+[---]
+{{ output.getvalue() }}
