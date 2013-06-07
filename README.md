@@ -1,2 +1,2 @@
-[![Gittip](//badgr-co.herokuapp.com/Gittip/Badgr.png)](https://www.gittip.com/Badgr/)
+[![Gittip](http://badgr.co/Gittip/Badgr.png)](https://www.gittip.com/Badgr/)
 
