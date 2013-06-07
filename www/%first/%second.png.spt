@@ -1,6 +1,8 @@
 import os
 from cStringIO import StringIO
+from urllib import quote, urlopen
 
+from aspen import json
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -9,20 +11,81 @@ font_filepath = os.path.join(website.project_root, 'OpenSans-Regular.ttf')
 font_size = 10
 font = ImageFont.truetype(font_filepath, size=font_size)
 
+DARK_GREY = (74,74,74)
+LIGHT_GREY = (135,135,135)
+
+RED = (179,0,0)
+GREEN = (147,188,59)
+YELLOW = (177,175,0)
+
+
+# Make one service just for kicks.
+# ================================
+
+services = {}
+
+class Generic(object):
+
+    def __init__(self, first, second, bg):
+        self.first = first
+        self.second = second
+        self.bg = bg
+
+
+class TravisCI(object):
+
+    def __init__(self, first, second, bg):
+        self.first = "build"
+
+        url = 'https://api.travis-ci.org/repos?slug=%s' % quote(second)
+        fp = urlopen(url)
+        repos = json.loads(fp.read())
+        if repos:
+            status = repos[0].get('last_build_status', 'n/a')
+        else:
+            status = 'n/a'
+
+        self.second = { 0: 'passing'
+                      , 1: 'failing'
+                      , None: 'pending'
+                      , 'n/a': 'n/a'
+                       }.get(status, 'n/a')
+
+        self.bg = { 'failing': RED
+                  , 'passing': GREEN
+                  , 'pending': YELLOW
+                   }.get(self.second, LIGHT_GREY)
+
+
+class Gittip(object):
+
+    def __init__(self, first, second, bg):
+        self.first = "Gittip"
+        self.second = second
+        self.bg = (42, 143, 121)  # Gittip green
+
+
+services['travis-ci'] = TravisCI
+services['gittip'] = Gittip
+
+
 [---]
 
-# Pull text from path.
-# ====================
+# Compute a badge.
+# ================
+# This may hit the network.
 
-first = path['first']
-second = path['second']
+first = path['first'].lower()
+bg = qs.get('bg', LIGHT_GREY)
+ServiceClass = services.get(first, Generic)
+badge = ServiceClass(first, path['second'], bg)
 
 
 # Compute width and height.
 # =========================
 
-w1 = 6 + font.getsize(first)[0] + 4
-w2 = 4 + font.getsize(second)[0] + 6
+w1 = 6 + font.getsize(badge.first)[0] + 4
+w2 = 4 + font.getsize(badge.second)[0] + 6
 w = w1 + w2
 h = 4 + font_size + 4
 
@@ -30,21 +93,18 @@ h = 4 + font_size + 4
 # Draw image.
 # ===========
 
-bg_color = (74, 74, 74, 255)
-
-image = Image.new('RGBA', (w,h), bg_color)
+image = Image.new('RGBA', (w,h), DARK_GREY)
 draw = ImageDraw.Draw(image)
 
-#draw.text((6, .1), first, fill=(0,0,0,76), font=font)
-draw.text((6, 1), first, fill='white', font=font)
-draw.text((6, 1), first, fill='white', font=font)
+draw.text((6, 1), badge.first, fill=(0,0,0,160), font=font)
+draw.text((6, 0), badge.first, fill='white', font=font)
+draw.text((6, 0), badge.first, fill='white', font=font)  # double up
 
-bg = qs.get('bg', 'rgb(135,135,135)')
-draw.rectangle((w1+1, 0, w, h), fill=bg)
+draw.rectangle((w1+1, 0, w, h), fill=badge.bg)
 
-#draw.text((w1 + 4, .1), second, fill=(0,0,0,76), font=font)
-draw.text((w1 + 5, 1), second, fill='white', font=font)
-draw.text((w1 + 5, 1), second, fill='white', font=font)
+draw.text((w1 + 5, 1), badge.second, fill=(0,0,0,160), font=font)
+draw.text((w1 + 5, 0), badge.second, fill='white', font=font)
+draw.text((w1 + 5, 0), badge.second, fill='white', font=font)  # double up
 
 output = StringIO()
 image.save(output, 'PNG')
