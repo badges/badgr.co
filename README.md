@@ -3,7 +3,8 @@
 ![badgr](https://f.cloud.github.com/assets/134455/626434/06b028fc-cfc0-11e2-9c21-b81d3f9cc128.jpg)
 
 
-Badgr.co provides dynamic README badges as PNG on HTTP and HTTPS.
+[Badgr.co](https://badgr.co/) provides dynamic README badges as PNG on HTTP and
+HTTPS.
 
 #### Supported Services
 
@@ -20,8 +21,8 @@ Badgr.co provides dynamic README badges as PNG on HTTP and HTTPS.
 
 #### Contribute
 
-Badgr.co is written in Python using [Aspen](http://aspen.io/) and is in the
-public domain.
+[Badgr.co](https://badgr.co/) is written in Python using
+[Aspen](http://aspen.io/) and is in the public domain.
 
 ```
 $ git clone git@github.com:gittip/badgr.co.git
@@ -38,11 +39,13 @@ to add a new service.
 
 #### Give Back
 
-Use and appreciate Badgr.co? [Give back on Gittip](https://www.gittip.com/Badgr.co/)!
+Use and appreciate Badgr.co? [Give back on
+Gittip](https://www.gittip.com/Badgr.co/)!
 
 [![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)
 
 
 #### Acknowledgements
 
-Badgr.co was inspired by @olivierlacan's [Shields](https://github.com/olivierlacan/shields) project.
+[Badgr.co](http://badgr.co/) was inspired by @olivierlacan's
+[Shields](https://github.com/olivierlacan/shields) project.
