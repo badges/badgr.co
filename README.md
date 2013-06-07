@@ -14,8 +14,8 @@ Badgr.co is a small service providing dynamic README badges.
 `[![Travis CI](http://badgr.co/travis-ci/rails%2Frails.png)](https://travis-ci.org/rails/rails)`
 
 
-[![Generic](http://badgr.co/cheez/whiz.png?bg=FFCE63)](http://www.cheezwhiz.com/)
-`[![Generic](http://badgr.co/cheez/whiz.png?bg=FFCE63)](http://www.cheezwhiz.com/)`
+[![Generic](http://badgr.co/cheez/whiz.png?bg=%23FFCE63)](http://www.cheezwhiz.com/)
+`[![Generic](http://badgr.co/cheez/whiz.png?bg=%23FFCE63)](http://www.cheezwhiz.com/)`
 
 
 #### Contribute
