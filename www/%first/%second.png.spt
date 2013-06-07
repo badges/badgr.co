@@ -1,32 +1,56 @@
 import os
 from cStringIO import StringIO
 
-import numpy
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-FONT_FILEPATH = os.path.join(website.project_root, 'OpenSans-Bold.ttf')
-FONT = ImageFont.truetype(FONT_FILEPATH, 10)
+font_filepath = os.path.join(website.project_root, 'OpenSans-Regular.ttf')
+font = ImageFont.truetype(font_filepath, size=10)
 
 [---]
 
-h,w = 18, 100
+# Pull text from path.
+# ====================
 
-bg_color = (74, 74, 74)
+first = path['first']
+second = path['second']
 
-# Thanks to http://stackoverflow.com/a/8111503/253309.
-bg_image = numpy.dot( numpy.ones((h,w,3), dtype='uint8')
-                    , numpy.diag(numpy.asarray((bg_color), dtype='uint8'))
-                     )
-image = Image.fromarray(bg_image)
 
-text = "%s %s" % (path['key'], path['value'])
-ImageDraw.Draw(image).text((7, 1), text, fill='rgb(0,0,0)', font=FONT)
-ImageDraw.Draw(image).text((6, 0), text, fill='white', font=FONT)
+# Compute width and height.
+# =========================
+
+w1 = 6 + font.getsize(first)[0] + 4
+w2 = 4 + font.getsize(second)[0] + 6
+w = w1 + w2
+h = 4 + 10 + 4
+
+
+# Draw image.
+# ===========
+
+bg_color = (74, 74, 74, 255)
+
+image = Image.new('RGBA', (w,h), bg_color)
+draw = ImageDraw.Draw(image)
+
+#draw.text((6, .1), first, fill=(0,0,0,76), font=font)
+draw.text((6, 0), first, fill='white', font=font)
+draw.text((6, 0), first, fill='white', font=font)
+
+bg = qs.get('bg', 'rgb(135,135,135)')
+draw.rectangle((w1+1, 0, w, h), fill=bg)
+
+#draw.text((w1 + 4, .1), second, fill=(0,0,0,76), font=font)
+draw.text((w1 + 5, 0), second, fill='white', font=font)
+draw.text((w1 + 5, 0), second, fill='white', font=font)
 
 output = StringIO()
 image.save(output, 'PNG')
+
+
+# For later:
+# http://nedbatchelder.com/blog/200801/truly_transparent_text_with_pil.html
 
 [---]
 {{ output.getvalue() }}
