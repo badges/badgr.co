@@ -1,3 +1,46 @@
-[![Gittip](http://badgr.co/Gittip/Badgr.io.png)](https://www.gittip.com/Badgr.io/)
+## Badgr.co
 
-Inspired by @olivierlacan's [Shields](https://github.com/olivierlacan/shields) project.
+![badgr](https://f.cloud.github.com/assets/134455/626434/06b028fc-cfc0-11e2-9c21-b81d3f9cc128.jpg)
+
+
+Badgr.co is a small service providing dynamic README badges.
+
+#### Supported Services
+
+[![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)
+`[![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)`
+
+[![Travis CI](http://badgr.co/travis-ci/rails%2Frails.png)](https://travis-ci.org/rails/rails)
+`[![Travis CI](http://badgr.co/travis-ci/rails%2Frails.png)](https://travis-ci.org/rails/rails)`
+
+
+[![Generic](http://badgr.co/cheez/whiz.png?bg=FFCE63)](http://www.cheezwhiz.com/)
+`[![Generic](http://badgr.co/cheez/whiz.png?bg=FFCE63)](http://www.cheezwhiz.com/)`
+
+
+#### Contribute
+
+Badgr.co is written in Python using [Aspen](http://aspen.io/) and is in the
+public domain.
+
+```
+$ git clone git@github.com:gittip/badgr.co.git
+$ cd badgr.co
+$ make run
+```
+
+The dependencies are included in the `vendor/` directory.
+
+Look in `badgr/services.py` to add a new service.
+
+
+#### Give Back
+
+Use and appreciate Badgr.co? [Give back on Gittip](https://www.gittip.com/Badgr.co/)!
+
+[![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)
+
+
+#### Acknowledgements
+
+Badgr.co was inspired by @olivierlacan's [Shields](https://github.com/olivierlacan/shields) project.

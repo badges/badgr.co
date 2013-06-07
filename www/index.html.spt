@@ -1,2 +1,2 @@
-request.redirect('https://github.com/gittip/badgr.co')
+request.redirect('https://github.com/gittip/badgr.co#readme')
 [---]
