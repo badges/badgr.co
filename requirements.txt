@@ -3,4 +3,5 @@
 ./vendor/tornado-1.2.1.tar.gz
 ./vendor/aspen-0.24.3.tar.bz2
 
+./vendor/numpy-1.7.1.tar.gz
 ./vendor/Pillow-2.0.0.zip
