@@ -96,15 +96,15 @@ h = 4 + font_size + 4
 image = Image.new('RGBA', (w,h), DARK_GREY)
 draw = ImageDraw.Draw(image)
 
-draw.text((6, 1), badge.first, fill=(0,0,0,160), font=font)
-draw.text((6, 0), badge.first, fill='white', font=font)
-draw.text((6, 0), badge.first, fill='white', font=font)  # double up
+draw.text((6, 2), badge.first, fill=(0,0,0,160), font=font)
+draw.text((6, 1), badge.first, fill='white', font=font)
+draw.text((6, 1), badge.first, fill='white', font=font)  # double up
 
 draw.rectangle((w1+1, 0, w, h), fill=badge.bg)
 
-draw.text((w1 + 5, 1), badge.second, fill=(0,0,0,160), font=font)
-draw.text((w1 + 5, 0), badge.second, fill='white', font=font)
-draw.text((w1 + 5, 0), badge.second, fill='white', font=font)  # double up
+draw.text((w1 + 5, 2), badge.second, fill=(0,0,0,160), font=font)
+draw.text((w1 + 5, 1), badge.second, fill='white', font=font)
+draw.text((w1 + 5, 1), badge.second, fill='white', font=font)  # double up
 
 output = StringIO()
 image.save(output, 'PNG')
