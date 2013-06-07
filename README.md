@@ -31,7 +31,9 @@ $ make run
 
 The dependencies are included in the `vendor/` directory.
 
-Look in `badgr/services.py` to add a new service.
+Look in
+[badgr/services.py](https://github.com/gittip/badgr.co/blob/master/badgr/services.py)
+to add a new service.
 
 
 #### Give Back
