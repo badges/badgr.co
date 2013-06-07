@@ -3,7 +3,7 @@
 ![badgr](https://f.cloud.github.com/assets/134455/626434/06b028fc-cfc0-11e2-9c21-b81d3f9cc128.jpg)
 
 
-Badgr.co is a small service providing dynamic README badges.
+Badgr.co provides dynamic README badges as PNG on HTTP and HTTPS.
 
 #### Supported Services
 
