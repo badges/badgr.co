@@ -1,2 +1,129 @@
-request.redirect('https://github.com/gittip/badgr.co#readme')
-[---]
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Georgia, sans-serif;
+      }
+      #body {
+        padding: 50px 50px 50px 500px;
+        position: relative;
+        z-index: 1;
+      }
+      #badger {
+        position: fixed;
+        bottom: -96px;
+        left: -128px;
+        z-index: 0;
+      }
+      h1, h2 {
+        margin: 3em 0 0.5em;
+        font: bold 12pt/12pt Verdana, sans-serif;
+        text-transform: uppercase;
+        color: #666;
+      }
+      h1 {
+        margin-top: 0;
+        color: #000;
+      }
+      code {
+        white-space: nowrap;
+        font-size: smaller;
+      }
+      #services {
+        width: 100%;
+        overflow: auto;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="badger.jpg" id="badger" />
+
+    <a href="https://github.com/gittip/badgr.co"><img style="position:
+      fixed; top: 0; right: 0; border: 0;"
+      src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+      alt="Fork me on GitHub"></a>
+
+    <div id="body">
+
+      <h1>Badgr.co</h1>
+
+      <p>Dynamic README badges &mdash; PNG &mdash; HTTP / HTTPS</p>
+
+      <h2>Supported Services</h2>
+
+      <div id="services">
+        <p>
+            <a href="https://coveralls.io/r/resque/resque" title="Coveralls"><img src="http://badgr.co/coveralls/resque%2Fresque.png" /></a>
+            <code>[![Coveralls](http://badgr.co/coveralls/resque%2Fresque.png)](https://coveralls.io/r/resque/resque)</code>
+        </p>
+
+        <p>
+            <a title="Gittip" href="https://www.gittip.com/Badgr.co/"><img src="http://badgr.co/Gittip/Badgr.co.png" /></a>
+            <code>[![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)</code>
+        </p>
+
+        <p>
+            <a title="Travis CI" href="https://travis-ci.org/rails/rails"><img src="http://badgr.co/travis-ci/rails%2Frails.png" /></a>
+            <code>[![Travis CI](http://badgr.co/travis-ci/rails%2Frails.png)](https://travis-ci.org/rails/rails)</code>
+        </p>
+
+        <p>
+            <a title="Generic" href="http://www.cheezwhiz.com/"><img src="http://badgr.co/cheez/whiz.png?bg=%23FFCE63" /></a>
+            <code>[![Generic](http://badgr.co/cheez/whiz.png?bg=%23FFCE63)](http://www.cheezwhiz.com/)></code>
+        </p>
+      </div>
+
+
+      <h2>Contribute</h2>
+
+      <p><a href="http://badgr.co/">Badgr.co</a> is written in Python using <a
+      href="http://aspen.io/">Aspen</a> and is in the public domain.</p>
+
+      <pre>
+      $ git clone git@github.com:gittip/badgr.co.git
+      $ cd badgr.co
+      $ make run
+      </pre>
+
+      <p>Dependencies are included in the <a
+        href="https://github.com/gittip/badgr.co/tree/master/vendor">vendor</a>
+      directory.</p>
+
+      <p>Look at <a
+      href="https://github.com/gittip/badgr.co/blob/master/badgr/services.py">badgr/services.py</a>
+      to add a new service.</p>
+
+
+      <h2>Give Back</h2>
+
+      <p>Use and appreciate Badgr.co? <a href="https://www.gittip.com/Badgr.co/">Give
+      back on Gittip</a>!</p>
+
+      <p><a title="Gittip" href="https://www.gittip.com/Badgr.co/"><img src="http://badgr.co/Gittip/Badgr.co.png" /></a></p>
+
+
+      <h2>Acknowledgements</h2>
+
+      <p><a href="http://badgr.co/">Badgr.co</a> was inspired by Olivier Lacan's
+      <a href="https://github.com/olivierlacan/shields">Shields</a> project.</p>
+
+    </div>
+
+    <script type="text/javascript">
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '51b378ae613f5d5645000061');
+        t.src = '//secure.gaug.es/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+  </body>
+</html>
