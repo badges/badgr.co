@@ -14,7 +14,7 @@
       }
       #badger {
         position: fixed;
-        bottom: -96px;
+        bottom: -80px;
         left: -128px;
         z-index: 0;
       }
