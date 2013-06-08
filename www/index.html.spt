@@ -125,6 +125,12 @@ $ make run</pre>
       <p><a href="http://badgr.co/">Badgr.co</a> was inspired by Olivier Lacan's
       <a href="https://github.com/olivierlacan/shields">Shields</a> project.</p>
 
+      <p><b>Update:</b> Shields is working on a fully dynamic <a
+        href="https://github.com/olivierlacan/shields/issues/15">shields-as-a-service</a>
+        project, which, ideally, Badgr.co <a
+          href="https://github.com/olivierlacan/shields/issues/15#issuecomment-19154168">will be able to
+          join</a>.</p>
+
     </div>
 
     <script type="text/javascript">
