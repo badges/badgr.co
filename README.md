@@ -8,6 +8,9 @@ HTTPS.
 
 #### Supported Services
 
+[![Coveralls](http://badgr.co/coveralls/resque%2Fresque.png)](https://coveralls.io/r/resque/resque)
+`[![Coveralls](http://badgr.co/coveralls/resque%2Fresque.png)](https://coveralls.io/r/resque/resque)`
+
 [![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)
 `[![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)`
 
