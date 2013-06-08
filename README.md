@@ -33,7 +33,7 @@ $ cd badgr.co
 $ make run
 ```
 
-The dependencies are included in the
+Dependencies are included in the
 [vendor](https://github.com/gittip/badgr.co/tree/master/vendor) directory.
 
 Look in
