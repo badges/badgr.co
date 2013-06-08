@@ -32,6 +32,11 @@
         white-space: nowrap;
         font-size: smaller;
       }
+      pre {
+        overflow: auto;
+        margin: 1em 0;
+        padding: 0 0 3pt 0;
+      }
       #services {
         width: 100%;
         overflow: auto;
@@ -83,11 +88,9 @@
       <p><a href="http://badgr.co/">Badgr.co</a> is written in Python using <a
       href="http://aspen.io/">Aspen</a> and is in the public domain.</p>
 
-      <pre>
-      $ git clone git@github.com:gittip/badgr.co.git
-      $ cd badgr.co
-      $ make run
-      </pre>
+      <pre>$ git clone git@github.com:gittip/badgr.co.git
+$ cd badgr.co
+$ make run</pre>
 
       <p>Dependencies are included in the <a
         href="https://github.com/gittip/badgr.co/tree/master/vendor">vendor</a>
