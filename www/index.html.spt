@@ -42,6 +42,17 @@
         overflow: auto;
         white-space: nowrap;
       }
+      @media (max-width: 950px) {
+        #body { padding: 50px; }
+        #badger {
+          display: block;
+          position: static;
+          margin: 0 auto;
+        }
+      }
+      @media (max-width: 700px) {
+        #badger { width: 100%; }
+      }
     </style>
   </head>
   <body>
