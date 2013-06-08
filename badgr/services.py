@@ -23,6 +23,29 @@ class Generic(object):
         self.bg = bg
 
 
+class Coveralls(object):
+
+    def __init__(self, first, second, bg):
+        self.first = "coverage"
+        url = "https://coveralls.io/repos/%s/badge.png?branch=master"
+        fp = urlopen(url % second)
+        try:
+            # We get a redirect to an S3 URL.
+            score = fp.url.split('_')[1].split('.')[0]
+            self.second = score + '%'
+
+            as_number = int(score)
+            if as_number < 80:
+                self.bg = RED
+            elif as_number < 90:
+                self.bg = YELLOW
+            else:
+                self.bg = GREEN
+        except (IndexError, ValueError):
+            self.second = 'n/a'
+            self.bg = LIGHT_GREY
+
+
 class Gittip(object):
 
     def __init__(self, first, second, bg):
@@ -57,6 +80,7 @@ class TravisCI(object):
 
 
 services = {}
+services['coveralls'] = Coveralls
 services['gittip'] = Gittip
 services['travis-ci'] = TravisCI
 
