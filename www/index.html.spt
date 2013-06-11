@@ -73,22 +73,22 @@
 
       <div id="services">
         <p>
-            <a href="https://coveralls.io/r/resque/resque" title="Coveralls"><img src="http://badgr.co/coveralls/resque%2Fresque.png" /></a>
+            <a href="https://coveralls.io/r/resque/resque" title="Coveralls"><img src="//badgr.co/coveralls/resque%2Fresque.png" /></a>
             <code>[![Coveralls](http://badgr.co/coveralls/resque%2Fresque.png)](https://coveralls.io/r/resque/resque)</code>
         </p>
 
         <p>
-            <a title="Gittip" href="https://www.gittip.com/Badgr.co/"><img src="http://badgr.co/Gittip/Badgr.co.png" /></a>
+            <a title="Gittip" href="https://www.gittip.com/Badgr.co/"><img src="//badgr.co/Gittip/Badgr.co.png" /></a>
             <code>[![Gittip](http://badgr.co/Gittip/Badgr.co.png)](https://www.gittip.com/Badgr.co/)</code>
         </p>
 
         <p>
-            <a title="Travis CI" href="https://travis-ci.org/rails/rails"><img src="http://badgr.co/travis-ci/rails%2Frails.png" /></a>
+            <a title="Travis CI" href="https://travis-ci.org/rails/rails"><img src="//badgr.co/travis-ci/rails%2Frails.png" /></a>
             <code>[![Travis CI](http://badgr.co/travis-ci/rails%2Frails.png)](https://travis-ci.org/rails/rails)</code>
         </p>
 
         <p>
-            <a title="Generic" href="http://www.cheezwhiz.com/"><img src="http://badgr.co/cheez/whiz.png?bg=%23FFCE63" /></a>
+            <a title="Generic" href="http://www.cheezwhiz.com/"><img src="//badgr.co/cheez/whiz.png?bg=%23FFCE63" /></a>
             <code>[![Generic](http://badgr.co/cheez/whiz.png?bg=%23FFCE63)](http://www.cheezwhiz.com/)></code>
         </p>
       </div>
@@ -117,7 +117,7 @@ $ make run</pre>
       <p>Use and appreciate Badgr.co? <a href="https://www.gittip.com/Badgr.co/">Give
       back on Gittip</a>!</p>
 
-      <p><a title="Gittip" href="https://www.gittip.com/Badgr.co/"><img src="http://badgr.co/Gittip/Badgr.co.png" /></a></p>
+      <p><a title="Gittip" href="https://www.gittip.com/Badgr.co/"><img src="https://badgr.co/Gittip/Badgr.co.png" /></a></p>
 
 
       <h2>Acknowledgements</h2>
