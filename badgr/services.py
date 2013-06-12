@@ -49,8 +49,10 @@ class Coveralls(object):
 class Gittip(object):
 
     def __init__(self, first, second, bg):
-        self.first = "Gittip"
-        self.second = second
+        self.first = "donations"
+        fp = urlopen("https://www.gittip.com/%s/public.json" % second)
+        receiving = json.loads(fp.read())['receiving']
+        self.second = "$%d / week" % float(receiving)
         self.bg = (42, 143, 121)  # Gittip green! :)
 
 
