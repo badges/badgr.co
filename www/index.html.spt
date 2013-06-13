@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Dynamic README Badges - Badgr.co</title>
+    <title>Badges as a Service- Badgr.co</title>
     <style>
       body {
         margin: 0;
@@ -67,9 +67,9 @@
 
       <h1>Badgr.co</h1>
 
-      <p>Dynamic README badges &mdash; PNG &mdash; HTTP / HTTPS</p>
+      <p>Badges as a Service &mdash; PNG &mdash; HTTP / HTTPS</p>
 
-      <h2>Supported Services</h2>
+      <h2>Supported Vendors</h2>
 
       <div id="services">
         <p>
