@@ -49,7 +49,7 @@ class Coveralls(object):
 class Gittip(object):
 
     def __init__(self, first, second, bg):
-        self.first = "donations"
+        self.first = "tips"
         fp = urlopen("https://www.gittip.com/%s/public.json" % second)
         receiving = json.loads(fp.read())['receiving']
         self.second = "$%d / week" % float(receiving)
