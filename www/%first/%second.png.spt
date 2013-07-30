@@ -1,17 +1,14 @@
 import os
+import subprocess
+import tempfile
 from cStringIO import StringIO
 from urllib import quote, urlopen
 
 from aspen import json
 from badgr import services
 from badgr.colors import DARK_GREY, LIGHT_GREY
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
 
-font_filepath = os.path.join(website.project_root, 'OpenSans-Regular.ttf')
-font_size = 10
-font = ImageFont.truetype(font_filepath, size=font_size)
+shielded = os.path.join(website.project_root, "..", "shielded", "shielded")
 
 
 [---]
@@ -26,37 +23,16 @@ ServiceClass = services.get(first)
 badge = ServiceClass(first, path['second'], bg)
 
 
-# Compute width and height.
-# =========================
-
-w1 = 6 + font.getsize(badge.first)[0] + 4
-w2 = 4 + font.getsize(badge.second)[0] + 6
-w = w1 + w2
-h = 4 + font_size + 4
-
-
 # Draw image.
 # ===========
 
-image = Image.new('RGBA', (w,h), DARK_GREY)
-draw = ImageDraw.Draw(image)
-
-draw.text((6, 2), badge.first, fill=(0,0,0,160), font=font)
-draw.text((6, 1), badge.first, fill='white', font=font)
-draw.text((6, 1), badge.first, fill='white', font=font)  # double up
-
-draw.rectangle((w1+1, 0, w, h), fill=badge.bg)
-
-draw.text((w1 + 5, 2), badge.second, fill=(0,0,0,160), font=font)
-draw.text((w1 + 5, 1), badge.second, fill='white', font=font)
-draw.text((w1 + 5, 1), badge.second, fill='white', font=font)  # double up
-
-output = StringIO()
-image.save(output, 'PNG')
-
-
-# For later:
-# http://nedbatchelder.com/blog/200801/truly_transparent_text_with_pil.html
-
+with tempfile.NamedTemporaryFile(suffix='.png') as fp:
+    subprocess.call([ shielded
+                    , "--label", badge.first
+                    , "--value", badge.second
+                    #, "--color", badge.color
+                    , "--file", fp.name
+                     ])
+    png_data = open(fp.name).read()
 [---]
-{{ output.getvalue() }}
+{{ png_data }}
