@@ -1,31 +1,30 @@
 """This module contains service definions for Badgr.co.
 
-Service classes should take three strings (first, second, bg) and set three
-attributes (first, second, and bg).
+Service classes should take three strings (first, second, color) and set three
+attributes (first, second, and color).
 
     first - the first path part => the first word on the badge
     second - the second path part => the second word on the badge
-    bg - an RGB color definition, the background behind the second word on the
-        badge
+    color - a color name, the background behind the second word on the badge
 
 """
 from urllib import quote, urlopen
 
-from badgr.colors import RED, YELLOW, GREEN, LIGHT_GREY
 from aspen import json
+from badgr.colors import RED, YELLOW, YELLOWGREEN, GREEN, LIGHTGRAY
 
 
 class Generic(object):
 
-    def __init__(self, first, second, bg):
+    def __init__(self, first, second, color):
         self.first = first
         self.second = second
-        self.bg = bg
+        self.color = color
 
 
 class Coveralls(object):
 
-    def __init__(self, first, second, bg):
+    def __init__(self, first, second, color):
         self.first = "coverage"
         url = "https://coveralls.io/repos/%s/badge.png?branch=master"
         fp = urlopen(url % second)
@@ -36,29 +35,36 @@ class Coveralls(object):
 
             as_number = int(score)
             if as_number < 80:
-                self.bg = RED
+                self.color = RED
             elif as_number < 90:
-                self.bg = YELLOW
+                self.color = YELLOW
             else:
-                self.bg = GREEN
+                self.color = GREEN
         except (IndexError, ValueError):
             self.second = 'n/a'
-            self.bg = LIGHT_GREY
+            self.color = LIGHTGRAY
 
 
 class Gittip(object):
 
-    def __init__(self, first, second, bg):
+    def __init__(self, first, second, color):
         self.first = "donations"
         fp = urlopen("https://www.gittip.com/%s/public.json" % second)
-        receiving = json.loads(fp.read())['receiving']
-        self.second = "$%d / week" % float(receiving)
-        self.bg = (42, 143, 121)  # Gittip green! :)
+        receiving = float(json.loads(fp.read())['receiving'])
+        self.second = "$%d / week" % receiving
+        if receiving == 0:
+            self.color = RED
+        elif receiving < 10:
+            self.color = YELLOW
+        elif receiving < 100:
+            self.color = YELLOWGREEN
+        else:
+            self.color = GREEN
 
 
 class TravisCI(object):
 
-    def __init__(self, first, second, bg):
+    def __init__(self, first, second, color):
         self.first = "build"
 
         url = 'https://api.travis-ci.org/repos?slug=%s' % quote(second)
@@ -75,10 +81,10 @@ class TravisCI(object):
                       , 'n/a': 'n/a'
                        }.get(status, 'n/a')
 
-        self.bg = { 'failing': RED
-                  , 'passing': GREEN
-                  , 'pending': YELLOW
-                   }.get(self.second, LIGHT_GREY)
+        self.color = { 'failing': RED
+                     , 'passing': GREEN
+                     , 'pending': YELLOW
+                      }.get(self.second, LIGHTGRAY)
 
 
 services = {}

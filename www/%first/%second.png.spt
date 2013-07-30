@@ -1,12 +1,10 @@
 import os
 import subprocess
 import tempfile
-from cStringIO import StringIO
-from urllib import quote, urlopen
 
-from aspen import json
+from aspen import Response
 from badgr import services
-from badgr.colors import DARK_GREY, LIGHT_GREY
+from badgr.colors import LIGHTGRAY, all_colors
 
 shielded = os.path.join(website.project_root, "..", "shielded", "shielded")
 
@@ -18,9 +16,14 @@ shielded = os.path.join(website.project_root, "..", "shielded", "shielded")
 # This may hit the network.
 
 first = path['first'].lower()
-bg = qs.get('bg', LIGHT_GREY)
+color = qs.get('color', LIGHTGRAY)
+if color not in all_colors:
+    response = Response(400)
+    response.body = "Bad color. Options are: %s." % ", ".join(all_colors)
+    response.headers['Content-Type'] = 'text/plain'
+    raise response
 ServiceClass = services.get(first)
-badge = ServiceClass(first, path['second'], bg)
+badge = ServiceClass(first, path['second'], color)
 
 
 # Draw image.
@@ -30,7 +33,7 @@ with tempfile.NamedTemporaryFile(suffix='.png') as fp:
     subprocess.call([ shielded
                     , "--label", badge.first
                     , "--value", badge.second
-                    #, "--color", badge.color
+                    , "--color", badge.color
                     , "--file", fp.name
                      ])
     png_data = open(fp.name).read()
