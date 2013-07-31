@@ -1,12 +1,24 @@
 import os
 import subprocess
 import tempfile
+import urlparse
 
+from redis import StrictRedis
 from aspen import Response
 from badgr import services
 from badgr.colors import LIGHTGRAY, all_colors
 
+
+# Configure shielded.
+# ===================
+
 shielded = os.path.join(website.project_root, "shielded", "shielded")
+
+
+# Configure Redis.
+# ================
+
+redis = StrictRedis.from_url(os.environ['REDIS_URL'])
 
 
 [---]
@@ -26,16 +38,26 @@ ServiceClass = services.get(first)
 badge = ServiceClass(first, path['second'], color)
 
 
-# Draw image.
-# ===========
+# Get PNG data.
+# =============
+# Cache in Redis.
 
-with tempfile.NamedTemporaryFile(suffix='.png') as fp:
-    subprocess.call([ shielded
-                    , "--label", badge.first
-                    , "--value", badge.second
-                    , "--color", badge.color
-                    , "--file", fp.name
-                     ])
-    png_data = open(fp.name).read()
+key = "[%s|%s] %s" % (badge.first, badge.second, badge.color)
+png_data = redis.get(key)
+if png_data is None:
+
+    # Draw image.
+    # ===========
+
+    with tempfile.NamedTemporaryFile(suffix='.png') as fp:
+        subprocess.call([ shielded
+                        , "--label", badge.first
+                        , "--value", badge.second
+                        , "--color", badge.color
+                        , "--file", fp.name
+                         ])
+        png_data = open(fp.name).read()
+
+    redis.set(key, png_data)
 [---]
 {{ png_data }}
