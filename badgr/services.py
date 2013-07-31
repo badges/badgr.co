@@ -8,10 +8,21 @@ three strings (first, second, and color).
     color - a color name, the background behind the second word on the badge
 
 """
+import os
 from urllib import quote, urlopen
 
 from aspen import json
 from badgr.colors import RED, YELLOW, YELLOWGREEN, GREEN, LIGHTGRAY
+
+
+def _test(first, second, color):
+    """For testing.
+    """
+    if second == "random":
+        base = os.environ['CANONICAL_HOST']
+        url = base + "/random.txt"
+        second = urlopen(url).read()
+    return first, second, color
 
 
 def generic(first, second, color):
@@ -84,6 +95,7 @@ def travis_ci(first, second, color):
 
 
 services = {}
+services['_test'] = _test
 services['coveralls'] = coveralls
 services['gittip'] = gittip
 services['travis-ci'] = travis_ci
