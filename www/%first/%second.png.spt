@@ -16,7 +16,8 @@ from badgr.colors import LIGHTGRAY, all_colors
 shielded = os.path.join(website.project_root, "shielded", "shielded")
 redis = StrictRedis.from_url(os.environ['REDIS_URL'])
 TRANSFORM_TIMEOUT = int(os.environ['BADGR_TRANSFORM_TIMEOUT'])  # seconds
-MAX_AGE = int(os.environ['BADGR_MAX_AGE'])                          # seconds
+SEMAPHORE_TIMEOUT = int(os.environ['BADGR_SEMAPHORE_TIMEOUT'])  # seconds
+MAX_AGE = int(os.environ['BADGR_MAX_AGE'])                      # seconds
 
 def transform_and_cache(transform_key, first, second, color):
     """This probably does expensive HTTP. Returns a dict.
@@ -24,7 +25,9 @@ def transform_and_cache(transform_key, first, second, color):
     transform = services.get(first)
     first, second, color = transform(first, second, color)  # expensive HTTP
     transformed = {"first": first, "second": second, "color": color}
-    log(transform_key + " -> %(first)s|%(second)s|%(color)s" % transformed)
+    log( transform_key + " transformed to %(first)s|%(second)s|%(color)s"
+       % transformed
+        )
     redis.hmset(transform_key, transformed)
     return transformed
 
@@ -87,7 +90,8 @@ elif transform_is_stale:
     # (We have to pass arguments into the thread target because if we depend on
     # the outer scope we get the reassigned values.)
 
-    def _(transform_key, first, second, color):
+    def _(first, second, color):
+
         log(transform_key + " re-transforming")
         transform_and_cache(transform_key, first, second, color)
 
@@ -96,13 +100,31 @@ elif transform_is_stale:
         # towards RedisGreen, but for now ...
 
         redis.setex(transform_freshness, TRANSFORM_TIMEOUT, "yes")
+        redis.delete(semaphore)
 
-    thread = threading.Thread( target=_
-                             , args=(transform_key, first, second, color)
-                              )
-    thread.daemon = True
-    thread.start()
-    log(transform_key + " thread started")
+
+    semaphore = transform_key + "|semaphore"
+    if not redis.setnx(semaphore, "blah"):
+
+        # Some other thread (possibly in another process) is purportedly
+        # working on this already. We'll let them.
+
+        pass
+
+    else:
+
+        # We own this task. Let's set a long timeout just in case our process
+        # dies before we finish. We'll serve stale data until the timeout
+        # expires and another process can pick this up.
+
+        redis.expire(semaphore, SEMAPHORE_TIMEOUT)
+
+        thread = threading.Thread(target=_, args=(first, second, color))
+        thread.daemon = True
+        thread.start()
+
+        log(transform_key + " thread started")
+
 
 first = transformed['first']
 second = transformed['second']
