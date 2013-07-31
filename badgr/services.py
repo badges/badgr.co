@@ -25,7 +25,7 @@ def _test(first, second, color):
     return first, second, color
 
 
-def generic(first, second, color):
+def noop(first, second, color):
     return first, second, color
 
 
@@ -101,4 +101,4 @@ services['gittip'] = gittip
 services['travis-ci'] = travis_ci
 
 def get(first):
-    return services.get(first, generic)
+    return services.get(first, noop)
