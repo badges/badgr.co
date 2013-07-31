@@ -83,5 +83,9 @@ if png_data is None:
 
     redis.set(png_key, png_data)
 
+
+response.headers['Cache-Control'] = 'public; max-age=60'
+response.headers['Vary'] = 'Accept-Encoding'
+response.headers.cookie.clear()
 [---]
 {{ png_data }}
