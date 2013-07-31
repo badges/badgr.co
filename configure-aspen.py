@@ -1,5 +1,8 @@
+import os
 import time
+
 from aspen import log
+
 
 def time_request_inbound(request):
     request._start = time.time()
@@ -12,3 +15,15 @@ def time_request_outbound(response):
 
 website.hooks.inbound_early += [time_request_inbound]
 website.hooks.outbound += [time_request_outbound]
+
+
+
+# Up the threadpool size.
+# =======================
+# Yanked from Gittip. Should upstream this.
+
+def up_minthreads(website):
+    website.network_engine.cheroot_server.requests.min = \
+                                           int(os.environ['ASPEN_THREAD_POOL'])
+
+website.hooks.startup.insert(0, up_minthreads)
