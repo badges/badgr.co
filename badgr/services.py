@@ -9,6 +9,7 @@ three strings (first, second, and color).
 
 """
 import os
+import time
 from urllib import quote, urlopen
 
 from aspen import json
@@ -18,10 +19,11 @@ from badgr.colors import RED, YELLOW, YELLOWGREEN, GREEN, LIGHTGRAY
 def _test(first, second, color):
     """For testing.
     """
+    time.sleep(2)
     if second == "random":
         base = os.environ['CANONICAL_HOST']
         url = base + "/random.txt"
-        second = urlopen(url).read()
+        second = urlopen(url).read().strip()
     return first, second, color
 
 
