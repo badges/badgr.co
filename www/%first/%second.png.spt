@@ -6,7 +6,7 @@ from aspen import Response
 from badgr import services
 from badgr.colors import LIGHTGRAY, all_colors
 
-shielded = os.path.join(website.project_root, "..", "shielded", "shielded")
+shielded = os.path.join(website.project_root, "shielded", "shielded")
 
 
 [---]

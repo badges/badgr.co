@@ -1,3 +1,3 @@
 [submodule "shielded"]
 	path = shielded
-	url = git@github.com:cainus/shielded.git
+	url = git://github.com/cainus/shielded.git
