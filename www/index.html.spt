@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Badges as a Service- Badgr.co</title>
+    <title>Shields as a Service - Shields.io</title>
     <style>
       body {
         margin: 0;
@@ -12,10 +12,10 @@
         position: relative;
         z-index: 1;
       }
-      #badger {
+      #shield {
         position: fixed;
-        bottom: -80px;
-        left: -128px;
+        bottom: 20px;
+        left: 20px;
         z-index: 0;
       }
       h1, h2 {
@@ -44,92 +44,91 @@
       }
       @media (max-width: 950px) {
         #body { padding: 50px; }
-        #badger {
+        #shield {
           display: block;
           position: static;
           margin: 0 auto;
         }
       }
       @media (max-width: 700px) {
-        #badger { width: 100%; }
+        #shield { width: 100%; }
       }
     </style>
   </head>
   <body>
-    <img src="badger.jpg" id="badger" />
+    <img src="shield.jpg" id="shield" />
 
-    <a href="https://github.com/gittip/badgr.co"><img style="position: fixed;
+    <a href="https://github.com/gittip/shields.io"><img style="position: fixed;
       top: 0; right: 0; border: 0; z-index: 2;"
       src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
       alt="Fork me on GitHub"></a>
 
     <div id="body">
 
-      <h1>Badgr.co</h1>
+      <h1>Shields.io</h1>
 
-      <p>Badges as a Service &mdash; PNG &mdash; HTTP / HTTPS</p>
+      <p>Shields as a Service &mdash; PNG &mdash; HTTP / HTTPS</p>
 
       <h2>Supported Vendors</h2>
 
       <div id="services">
         <p>
             <a href="https://coveralls.io/r/resque/resque" title="Coveralls"><img src="/coveralls/resque%2Fresque.png" /></a>
-            <code>[![Coveralls](http://badgr.co/coveralls/resque%2Fresque.png)](https://coveralls.io/r/resque/resque)</code>
+            <code>[![Coveralls](http://shields.io/coveralls/resque%2Fresque.png)](https://coveralls.io/r/resque/resque)</code>
         </p>
 
         <p>
             <a title="Gittip" href="https://www.gittip.com/JSFiddle/"><img src="/gittip/jsfiddle.png" /></a>
-            <code>[![Gittip](http://badgr.co/gittip/jsfiddle.png)](https://www.gittip.com/JSFiddle/)</code>
+            <code>[![Gittip](http://shields.io/gittip/jsfiddle.png)](https://www.gittip.com/JSFiddle/)</code>
         </p>
 
         <p>
             <a title="Travis CI" href="https://travis-ci.org/rails/rails"><img src="/travis-ci/rails%2Frails.png" /></a>
-            <code>[![Travis CI](http://badgr.co/travis-ci/rails%2Frails.png)](https://travis-ci.org/rails/rails)</code>
+            <code>[![Travis CI](http://shields.io/travis-ci/rails%2Frails.png)](https://travis-ci.org/rails/rails)</code>
         </p>
 
         <p>
             <a title="Generic" href="http://www.cheezwhiz.com/"><img src="/cheez/whiz.png?color=yellow" /></a>
-            <code>[![Generic](http://badgr.co/cheez/whiz.png?color=yellow)](http://www.cheezwhiz.com/)></code>
+            <code>[![Generic](http://shields.io/cheez/whiz.png?color=yellow)](http://www.cheezwhiz.com/)></code>
         </p>
       </div>
 
 
       <h2>Contribute</h2>
 
-      <p><a href="http://badgr.co/">Badgr.co</a> is written in Python using <a
-      href="http://aspen.io/">Aspen</a> and is in the public domain.</p>
+      <p><a href="http://shields.io/">Shields.io</a> is written in Python using
+      <a href="http://aspen.io/">Aspen</a> and is in the public domain.</p>
 
-      <pre>$ git clone git@github.com:gittip/badgr.co.git
-$ cd badgr.co
+      <p>It wraps a Node.js CLI called <code><a
+          href="https://github.com/cainus/shielded">shielded</a></code>.</p>
+
+      <pre>$ git clone git@github.com:gittip/shields.io.git
+$ cd shields.io
 $ make run</pre>
 
       <p>Dependencies are included in the <a
-        href="https://github.com/gittip/badgr.co/tree/master/vendor">vendor</a>
+        href="https://github.com/gittip/shields.io/tree/master/vendor">vendor</a>
       directory.</p>
 
       <p>Look at <a
-      href="https://github.com/gittip/badgr.co/blob/master/badgr/services.py">badgr/services.py</a>
+      href="https://github.com/gittip/shields.io/blob/master/badgr/services.py">badgr/services.py</a>
       to add a new service.</p>
 
 
       <h2>Give Back</h2>
 
-      <p>Use and appreciate Badgr.co? <a href="https://www.gittip.com/Badgr.co/">Give
-      back on Gittip</a>!</p>
+      <p>Use and appreciate Shields.io? <a
+        href="https://www.gittip.com/Shields.io/">Give back on Gittip</a>!</p>
 
-      <p><a title="Gittip" href="https://www.gittip.com/Badgr.co/"><img src="/Gittip/Badgr.co.png" /></a></p>
+      <p><a title="Gittip" href="https://www.gittip.com/Shields.io/"><img
+        src="/Gittip/Shields.io.png" /></a></p>
 
 
       <h2>Acknowledgements</h2>
 
-      <p><a href="http://badgr.co/">Badgr.co</a> was inspired by Olivier Lacan's
-      <a href="https://github.com/olivierlacan/shields">Shields</a> project.</p>
-
-      <p><b>Update:</b> Shields is working on a fully dynamic <a
-        href="https://github.com/olivierlacan/shields/issues/15">shields-as-a-service</a>
-        project, which, ideally, Badgr.co <a
-          href="https://github.com/olivierlacan/shields/issues/15#issuecomment-19154168">will be able to
-          join</a>.</p>
+      <p><a href="http://shields.io/">Shields.io</a> began life as Olivier
+      Lacan's <a href="https://github.com/olivierlacan/shields">Shields</a>
+      project.</p>
 
     </div>
 
