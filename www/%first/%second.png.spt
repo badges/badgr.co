@@ -19,31 +19,54 @@ shielded = os.path.join(website.project_root, "shielded", "shielded")
 # ================
 
 redis = StrictRedis.from_url(os.environ['REDIS_URL'])
+TRANSFORM_TIMEOUT = 60 # seconds
 
 
 [---]
 
-# Compute a badge.
-# ================
-# This may hit the network.
+# Parse and validate input.
+# =========================
 
-first = path['first'].lower()
+first = path['first'].lower()[:16]
+second = path['second'][:16]
 color = qs.get('color', LIGHTGRAY)
+
 if color not in all_colors:
     response = Response(400)
     response.body = "Bad color. Options are: %s." % ", ".join(all_colors)
     response.headers['Content-Type'] = 'text/plain'
     raise response
-ServiceClass = services.get(first)
-badge = ServiceClass(first, path['second'], color)
+
+
+# Transform tokens per service.
+# =============================
+
+transform_key = "%s|%s|%s" % (first, second, color)
+transformed = redis.hgetall(transform_key)
+if not transformed:
+
+    # Do the transform.
+    # =================
+    # This probably hits the network.
+
+    transform = services.get(first)
+    first, second, color = transform(first, second, color)
+    transformed = {"first": first, "second": second, "color": color}
+    redis.hmset(transform_key, transformed)
+    redis.expire(transform_key, TRANSFORM_TIMEOUT)
+
+first = transformed['first']
+second = transformed['second']
+color = transformed['color']
 
 
 # Get PNG data.
 # =============
 # Cache in Redis.
 
-key = "[%s|%s] %s" % (badge.first, badge.second, badge.color)
-png_data = redis.get(key)
+png_key = "[%s|%s] %s" % (first, second, color)
+png_data = redis.get(png_key)
+
 if png_data is None:
 
     # Draw image.
@@ -51,13 +74,14 @@ if png_data is None:
 
     with tempfile.NamedTemporaryFile(suffix='.png') as fp:
         subprocess.call([ shielded
-                        , "--label", badge.first
-                        , "--value", badge.second
-                        , "--color", badge.color
+                        , "--label", first
+                        , "--value", second
+                        , "--color", color
                         , "--file", fp.name
                          ])
         png_data = open(fp.name).read()
 
-    redis.set(key, png_data)
+    redis.set(png_key, png_data)
+
 [---]
 {{ png_data }}

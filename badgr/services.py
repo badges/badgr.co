@@ -1,7 +1,7 @@
 """This module contains service definions for Badgr.co.
 
-Service classes should take three strings (first, second, color) and set three
-attributes (first, second, and color).
+Service functions should take three strings (first, second, color) and return
+three strings (first, second, and color).
 
     first - the first path part => the first word on the badge
     second - the second path part => the second word on the badge
@@ -14,83 +14,79 @@ from aspen import json
 from badgr.colors import RED, YELLOW, YELLOWGREEN, GREEN, LIGHTGRAY
 
 
-class Generic(object):
-
-    def __init__(self, first, second, color):
-        self.first = first
-        self.second = second
-        self.color = color
+def generic(first, second, color):
+    return first, second, color
 
 
-class Coveralls(object):
+def coveralls(first, second, color):
+    first = "coverage"
+    url = "https://coveralls.io/repos/%s/badge.png?branch=master"
+    fp = urlopen(url % second)
+    try:
+        # We get a redirect to an S3 URL.
+        score = fp.url.split('_')[1].split('.')[0]
+        second = score + '%'
 
-    def __init__(self, first, second, color):
-        self.first = "coverage"
-        url = "https://coveralls.io/repos/%s/badge.png?branch=master"
-        fp = urlopen(url % second)
-        try:
-            # We get a redirect to an S3 URL.
-            score = fp.url.split('_')[1].split('.')[0]
-            self.second = score + '%'
-
-            as_number = int(score)
-            if as_number < 80:
-                self.color = RED
-            elif as_number < 90:
-                self.color = YELLOW
-            else:
-                self.color = GREEN
-        except (IndexError, ValueError):
-            self.second = 'n/a'
-            self.color = LIGHTGRAY
-
-
-class Gittip(object):
-
-    def __init__(self, first, second, color):
-        self.first = "tips"
-        fp = urlopen("https://www.gittip.com/%s/public.json" % second)
-        receiving = float(json.loads(fp.read())['receiving'])
-        self.second = "$%d / week" % receiving
-        if receiving == 0:
-            self.color = RED
-        elif receiving < 10:
-            self.color = YELLOW
-        elif receiving < 100:
-            self.color = YELLOWGREEN
+        as_number = int(score)
+        if as_number < 80:
+            color = RED
+        elif as_number < 90:
+            color = YELLOW
         else:
-            self.color = GREEN
+            color = GREEN
+    except (IndexError, ValueError):
+        second = 'n/a'
+        color = LIGHTGRAY
+
+    return first, second, color
 
 
-class TravisCI(object):
+def gittip(first, second, color):
+    first = "tips"
+    fp = urlopen("https://www.gittip.com/%s/public.json" % second)
+    receiving = float(json.loads(fp.read())['receiving'])
+    second = "$%d / week" % receiving
+    if receiving == 0:
+        color = RED
+    elif receiving < 10:
+        color = YELLOW
+    elif receiving < 100:
+        color = YELLOWGREEN
+    else:
+        color = GREEN
 
-    def __init__(self, first, second, color):
-        self.first = "build"
+    return first, second, color
 
-        url = 'https://api.travis-ci.org/repos?slug=%s' % quote(second)
-        fp = urlopen(url)
-        repos = json.loads(fp.read())
-        if repos:
-            status = repos[0].get('last_build_status', 'n/a')
-        else:
-            status = 'n/a'
 
-        self.second = { 0: 'passing'
-                      , 1: 'failing'
-                      , None: 'pending'
-                      , 'n/a': 'n/a'
-                       }.get(status, 'n/a')
+def travis_ci(first, second, color):
+    first = "build"
 
-        self.color = { 'failing': RED
-                     , 'passing': GREEN
-                     , 'pending': YELLOW
-                      }.get(self.second, LIGHTGRAY)
+    url = 'https://api.travis-ci.org/repos?slug=%s' % quote(second)
+    fp = urlopen(url)
+    repos = json.loads(fp.read())
+    if repos:
+        status = repos[0].get('last_build_status', 'n/a')
+    else:
+        status = 'n/a'
+
+    second = { 0: 'passing'
+             , 1: 'failing'
+             , None: 'pending'
+             , 'n/a': 'n/a'
+              }.get(status, 'n/a')
+
+    color = { 'failing': RED
+            , 'passing': GREEN
+            , 'pending': YELLOW
+             }.get(second, LIGHTGRAY)
+
+    return first, second, color
 
 
 services = {}
-services['coveralls'] = Coveralls
-services['gittip'] = Gittip
-services['travis-ci'] = TravisCI
+services['coveralls'] = coveralls
+services['gittip'] = gittip
+services['travis-ci'] = travis_ci
 
 def get(first):
-    return services.get(first, Generic)
+    return services.get(first, generic)
