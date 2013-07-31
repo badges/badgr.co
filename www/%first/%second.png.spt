@@ -2,6 +2,7 @@ import os
 import subprocess
 import tempfile
 import threading
+import time
 import urlparse
 
 from redis import StrictRedis
@@ -139,9 +140,14 @@ png_key = "%s|%s|%s|PNG" % (first, second, color)
 if _clear_caches:
     redis.delete(png_key)
 log(transform_key + " getting png_key")
+
+start = time.time()
 png_data = redis.get(png_key)
 if png_data is not None:
-    log(transform_key + " got %d bytes" % len(png_data))
+    nbytes = len(png_data)
+    end = time.time()
+    ms = (end - start) / 1000.0
+    log(transform_key + " got %d bytes in %d ms" % (nbytes, ms))
 
 if png_data is None:
 
