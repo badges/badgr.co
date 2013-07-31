@@ -23,4 +23,4 @@ clean:
 	find . -name \*.pyc -delete
 
 run: env/bin/aspen
-	./env/bin/aspen --www_root=www --project_root=.
+	foreman run -e local.env ./env/bin/aspen --www_root=www --project_root=.
