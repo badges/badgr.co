@@ -15,8 +15,8 @@ from badgr.colors import LIGHTGRAY, all_colors
 
 shielded = os.path.join(website.project_root, "shielded", "shielded")
 redis = StrictRedis.from_url(os.environ['REDIS_URL'])
-TRANSFORM_TIMEOUT = 1   # seconds
-MAX_AGE = 60            # seconds
+TRANSFORM_TIMEOUT = int(os.environ['BADGR_TRANSFORM_TIMEOUT'])  # seconds
+MAX_AGE = int(os.environ['BADGR_MAX_AGE'])                          # seconds
 
 def transform_and_cache(transform_key, first, second, color):
     """This probably does expensive HTTP. Returns a dict.
@@ -139,7 +139,7 @@ if png_data is None:
     redis.set(png_key, png_data)
 
 
-response.headers['Cache-Control'] = 'public; max-age=60'
+response.headers['Cache-Control'] = 'public; max-age=%d' % MAX_AGE
 response.headers['Vary'] = 'Accept-Encoding'
 response.headers.cookie.clear()
 [---]
