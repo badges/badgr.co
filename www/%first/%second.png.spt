@@ -18,6 +18,7 @@ shielded = os.path.join(website.project_root, "shielded", "shielded")
 redis = StrictRedis.from_url(os.environ['REDIS_URL'])
 TRANSFORM_TIMEOUT = int(os.environ['BADGR_TRANSFORM_TIMEOUT'])  # seconds
 SEMAPHORE_TIMEOUT = int(os.environ['BADGR_SEMAPHORE_TIMEOUT'])  # seconds
+PNG_DATA_TIMEOUT = int(os.environ['BADGR_PNG_DATA_TIMEOUT'])    # seconds
 MAX_AGE = int(os.environ['BADGR_MAX_AGE'])                      # seconds
 
 def transform_and_cache(transform_key, first, second, color):
@@ -165,6 +166,15 @@ if png_data is None:
         png_data = open(fp.name).read()
 
     redis.set(png_key, png_data)
+
+
+# Set a timeout on the PNG data cache.
+# ====================================
+# This should be set really long, like a week or a month. This is mostly a
+# protection against bloating our Redis db with the long tail of PNG data.
+# For active projects this will be perpetually postponed.
+
+redis.expire(png_key, PNG_DATA_TIMEOUT)
 
 
 response.headers['Cache-Control'] = 'public; max-age=%d' % MAX_AGE
